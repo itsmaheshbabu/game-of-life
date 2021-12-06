@@ -13,7 +13,7 @@ pipeline{
         }
         stage('docker image'){
             steps{
-                sh 'docker image build -t 10.160.0.4:8084/golproject:1.0 .' 
+                sh 'docker image build -t 10.160.0.4:8084/golproject:2.0 .' 
             }
            
         }
@@ -22,13 +22,13 @@ pipeline{
                 withCredentials([string(credentialsId: 'private_repo', variable: 'private_repo')]) {
                     sh 'docker login -u admin -p ${private_repo} 10.160.0.4:8084'
                 }
-                sh 'docker push 10.160.0.4:8084/golproject:1.0'
+                sh 'docker push 10.160.0.4:8084/golproject:2.0'
             }
         }
         // remove local image from jenkins server
         stage('remove local image'){
             steps{
-                sh 'docker rmi -f 10.160.0.4:8084/golproject:1.0'
+                sh 'docker rmi -f 10.160.0.4:8084/golproject:2.0'
             }
         }
         stage('Deploy to kubernetes cluster'){
