@@ -6,14 +6,14 @@
     labels:
       name: gol
   spec:
-    replicas: 3
+    replicas: 5
     selector:
       matchLabels:
-        app: gol
+        name: gol
     template:
       metadata:
         labels:
-          app: gol
+          name: gol
       spec:
         imagePullSecrets:
         - name: reposecret
