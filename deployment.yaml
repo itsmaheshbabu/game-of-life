@@ -1,41 +1,58 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gol-deployment
-  labels:
-    name: gol
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: gol
-  template:
-    metadata:
-      labels:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: gol-deployment
+    labels:
+      name: gol
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
         app: gol
-    spec:
-      containers:
-      - name: gol
-        image: 10.160.0.4:8084/golproject:1.0
-        ports:
+    template:
+      metadata:
+        labels:
+          app: gol
+      spec:
+        containers:
         - name: gol
-          containerPort: 8080
+          image: 10.160.0.4:8084/golproject:1.0
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "128Mi"
+            limits: 
+              cpu: "1000m"
+              memory: "512Mi"
+          ports:
+          - name: gol
+            containerPort: 8080
 
 
 
 ---
 # Node Port Service
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      name: gol
     name: gol
-  name: gol
-spec:
-  type: NodePort
-  ports:
-    - port: 8080
-      targetPort: 32001
-  selector:
-    name: gol
+  spec:
+    type: NodePort
+    ports:
+      - port: 8080
+        targetPort: 8080
+        protocol: TCP 
+        nodeport: 32001
+    selector:
+      name: gol
