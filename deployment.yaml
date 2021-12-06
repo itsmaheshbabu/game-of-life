@@ -16,7 +16,7 @@
           app: gol
       spec:
         imagePullSecrets:
-          - name: reposecret
+        - name: reposecret
         containers:
         - name: gol
           image: 10.160.0.4:8084/golproject:2.0
