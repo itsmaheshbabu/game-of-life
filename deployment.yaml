@@ -19,7 +19,7 @@
           - name: reposecret
         containers:
         - name: gol
-          image: 10.160.0.4:8084/golproject:1.0
+          image: 10.160.0.4:8084/golproject:2.0
           livenessProbe:
             httpGet:
               path: /
@@ -28,13 +28,6 @@
             httpGet:
               path: /
               port: 8080
-          resources:
-            requests:
-              cpu: "500m"
-              memory: "128Mi"
-            limits: 
-              cpu: "1000m"
-              memory: "512Mi"
           ports:
           - name: gol
             containerPort: 8080
