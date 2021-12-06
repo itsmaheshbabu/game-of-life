@@ -20,14 +20,6 @@
         containers:
         - name: gol
           image: 10.160.0.4:8084/golproject:2.0
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8080
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
           ports:
           - name: gol
             containerPort: 8080
