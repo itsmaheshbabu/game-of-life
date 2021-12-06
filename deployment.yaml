@@ -54,7 +54,5 @@
     ports:
       - port: 8080
         targetPort: 8080
-        protocol: TCP 
-        nodeport: 32005
     selector:
       name: gol
