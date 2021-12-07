@@ -11,6 +11,14 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage('SONAR_ANALYSIS') {
+            steps{
+                withSonarQubeEnv('SONAR-8.9LTS') {
+                    // requires SonarQube Scanner for Maven 3.2+
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                }
+            }
+        }
         stage('docker image'){
             steps{
                 sh 'docker image build -t 10.160.0.4:8084/golproject:2.0 .' 
